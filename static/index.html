@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Clock</title>
+		<link rel="shortcut icon" href="./static/icon.png" type="image/png">
+		<meta name="theme-color" content="#444444" />
+
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				display: flex;
+				flex-direction: column;
+				width: 100vw;
+				height: 100vh;
+				align-items: center;
+				justify-content: space-evenly;
+				background-color: #000000;
+				overflow: hidden;
+				color-scheme: dark;
+			}
+
+			#clock {
+				width: 80vmin;
+				height: 80vmin;
+				border-radius: 50%;
+				background-color: #2d2d33;
+				position: relative;
+				transition: opacity 300ms, transform 300ms 300ms;
+			}
+
+			.minuteline {
+				width: 0.6vmin;
+				height: 2vmin;
+				position: absolute;
+				top: 1vmin;
+				left: 39.7vmin;
+				background-color: #7d7d7d;
+				transform-origin: center 39vmin;
+			}
+
+			.minuteline.linemain {
+				width: 0.8vmin;
+				height: 3vmin;
+				position: absolute;
+				top: 1vmin;
+				left: 39.6vmin;
+				background-color: #cccccc;
+				transform-origin: center 39vmin;
+			}
+
+			#time3,
+			#time6,
+			#time9,
+			#time12 {
+				font-size: 4vmin;
+				font-family: monospace;
+				color: #efefef;
+				display: flex;
+				width: 6vmin;
+				height: 6vmin;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				z-index: 1;
+			}
+
+			#time12 {
+				top: 3vmin;
+				left: 37vmin;
+			}
+
+			#time3 {
+				top: 37vmin;
+				right: 3vmin;
+			}
+
+			#time6 {
+				bottom: 3vmin;
+				left: 37vmin;
+			}
+
+			#time9 {
+				top: 37vmin;
+				left: 3vmin;
+			}
+
+			@keyframes clockspin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			#secondhand {
+				width: 0.8vmin;
+				height: 45vmin;
+				position: absolute;
+				background-color: #4169ef;
+				top: 4vmin;
+				left: 39.6vmin;
+				z-index: 2;
+				transform-origin: center 36vmin;
+				animation: clockspin 60s linear infinite;
+				animation-delay: -{{secondHandDelay}}s;
+			}
+
+			#hourhand {
+				width: 1.6vmin;
+				height: 28vmin;
+				position: absolute;
+				background-color: #efefef;
+				top: 18vmin;
+				left: 39.2vmin;
+				z-index: 2;
+				transform-origin: center 22vmin;
+				animation: clockspin 43200s linear infinite;
+				animation-delay: -{{hourHandDelay}}s;
+			}
+
+			#minutehand {
+				width: 1.2vmin;
+				height: 38vmin;
+				position: absolute;
+				background-color: #efefef;
+				top: 10vmin;
+				left: 39.4vmin;
+				z-index: 2;
+				transform-origin: center 30vmin;
+				box-shadow: 0 0 5px 2px rgba(68, 68, 68, 0.4);
+				animation: clockspin 3600s linear infinite;
+				animation-delay: -{{minuteHandDelay}}s;
+			}
+
+			#circle {
+				width: 6vmin;
+				height: 6vmin;
+				position: absolute;
+				top: 37vmin;
+				left: 37vmin;
+				background-color: #efefef;
+				border-radius: 50%;
+				z-index: 3;
+				box-shadow: 0 0 10px 0px rgba(68, 68, 68, 0.4);
+			}
+
+			#m1 {
+				transform: rotate(0deg);
+			}
+
+			#m2 {
+				transform: rotate(6deg);
+			}
+
+			#m3 {
+				transform: rotate(12deg);
+			}
+
+			#m4 {
+				transform: rotate(18deg);
+			}
+
+			#m5 {
+				transform: rotate(24deg);
+			}
+
+			#m6 {
+				transform: rotate(30deg);
+			}
+
+			#m7 {
+				transform: rotate(36deg);
+			}
+
+			#m8 {
+				transform: rotate(42deg);
+			}
+
+			#m9 {
+				transform: rotate(48deg);
+			}
+
+			#m10 {
+				transform: rotate(54deg);
+			}
+
+			#m11 {
+				transform: rotate(60deg);
+			}
+
+			#m12 {
+				transform: rotate(66deg);
+			}
+
+			#m13 {
+				transform: rotate(72deg);
+			}
+
+			#m14 {
+				transform: rotate(78deg);
+			}
+
+			#m15 {
+				transform: rotate(84deg);
+			}
+
+			#m16 {
+				transform: rotate(90deg);
+			}
+
+			#m17 {
+				transform: rotate(96deg);
+			}
+
+			#m18 {
+				transform: rotate(102deg);
+			}
+
+			#m19 {
+				transform: rotate(108deg);
+			}
+
+			#m20 {
+				transform: rotate(114deg);
+			}
+
+			#m21 {
+				transform: rotate(120deg);
+			}
+
+			#m22 {
+				transform: rotate(126deg);
+			}
+
+			#m23 {
+				transform: rotate(132deg);
+			}
+
+			#m24 {
+				transform: rotate(138deg);
+			}
+
+			#m25 {
+				transform: rotate(144deg);
+			}
+
+			#m26 {
+				transform: rotate(150deg);
+			}
+
+			#m27 {
+				transform: rotate(156deg);
+			}
+
+			#m28 {
+				transform: rotate(162deg);
+			}
+
+			#m29 {
+				transform: rotate(168deg);
+			}
+
+			#m30 {
+				transform: rotate(174deg);
+			}
+
+			#m31 {
+				transform: rotate(180deg);
+			}
+
+			#m32 {
+				transform: rotate(186deg);
+			}
+
+			#m33 {
+				transform: rotate(192deg);
+			}
+
+			#m34 {
+				transform: rotate(198deg);
+			}
+
+			#m35 {
+				transform: rotate(204deg);
+			}
+
+			#m36 {
+				transform: rotate(210deg);
+			}
+
+			#m37 {
+				transform: rotate(216deg);
+			}
+
+			#m38 {
+				transform: rotate(222deg);
+			}
+
+			#m39 {
+				transform: rotate(228deg);
+			}
+
+			#m40 {
+				transform: rotate(234deg);
+			}
+
+			#m41 {
+				transform: rotate(240deg);
+			}
+
+			#m42 {
+				transform: rotate(246deg);
+			}
+
+			#m43 {
+				transform: rotate(252deg);
+			}
+
+			#m44 {
+				transform: rotate(258deg);
+			}
+
+			#m45 {
+				transform: rotate(264deg);
+			}
+
+			#m46 {
+				transform: rotate(270deg);
+			}
+
+			#m47 {
+				transform: rotate(276deg);
+			}
+
+			#m48 {
+				transform: rotate(282deg);
+			}
+
+			#m49 {
+				transform: rotate(288deg);
+			}
+
+			#m50 {
+				transform: rotate(294deg);
+			}
+
+			#m51 {
+				transform: rotate(300deg);
+			}
+
+			#m52 {
+				transform: rotate(306deg);
+			}
+
+			#m53 {
+				transform: rotate(312deg);
+			}
+
+			#m54 {
+				transform: rotate(318deg);
+			}
+
+			#m55 {
+				transform: rotate(324deg);
+			}
+
+			#m56 {
+				transform: rotate(330deg);
+			}
+
+			#m57 {
+				transform: rotate(336deg);
+			}
+
+			#m58 {
+				transform: rotate(342deg);
+			}
+
+			#m59 {
+				transform: rotate(348deg);
+			}
+
+			#m60 {
+				transform: rotate(354deg);
+			}
+
+			#time {
+				color: #efefef;
+				font-family: "Consolas", monospace;
+				font-size: 4vmin;
+				text-align: center;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+			}
+
+			#timezone {
+				border: none;
+				border-radius: 0.5vmin;
+				padding: 4px 8px;
+				cursor: pointer;
+			}
+
+			button {
+				padding: 4px 8px;
+				color: #efefef;
+				background-color: #2d2d33;
+				border: none;
+				border-radius: 0.5vmin;
+				cursor: pointer;
+			}
+
+			#GitHub {
+				position: absolute;
+				bottom: 16px;
+				right: 16px;
+			}
+
+			#GitHub img {
+				width: 32px;
+				height: auto;
+				transition: transform 300ms;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form id="time" method="get" action="">
+			Timezone:
+			<select title="timezone" id="timezone" name="tz">
+				{% for tz in timezones %}
+				<option value="{{ tz }}" {% if tz == selected %}selected{% endif %}>{{ tz }}</option>
+				{% endfor %}
+			</select>
+			<button type="submit" id="set-timezone">Set Timezone</button>
+			<button type="submit" name="reset" value="true" id="set-timezone">Autodetect</button>
+		</form>
+		<div id="clock">
+			<div id="time3">3</div>
+			<div id="time6">6</div>
+			<div id="time9">9</div>
+			<div id="time12">12</div>
+			<div id="hourhand"></div>
+			<div id="minutehand"></div>
+			<div id="secondhand"></div>
+			<div id="circle"></div>
+			<div id="m1" class="minuteline linemain"></div>
+			<div id="m2" class="minuteline"></div>
+			<div id="m3" class="minuteline"></div>
+			<div id="m4" class="minuteline"></div>
+			<div id="m5" class="minuteline"></div>
+			<div id="m6" class="minuteline linemain"></div>
+			<div id="m7" class="minuteline"></div>
+			<div id="m8" class="minuteline"></div>
+			<div id="m9" class="minuteline"></div>
+			<div id="m10" class="minuteline"></div>
+			<div id="m11" class="minuteline linemain"></div>
+			<div id="m12" class="minuteline"></div>
+			<div id="m13" class="minuteline"></div>
+			<div id="m14" class="minuteline"></div>
+			<div id="m15" class="minuteline"></div>
+			<div id="m16" class="minuteline linemain"></div>
+			<div id="m17" class="minuteline"></div>
+			<div id="m18" class="minuteline"></div>
+			<div id="m19" class="minuteline"></div>
+			<div id="m20" class="minuteline"></div>
+			<div id="m21" class="minuteline linemain"></div>
+			<div id="m22" class="minuteline"></div>
+			<div id="m23" class="minuteline"></div>
+			<div id="m24" class="minuteline"></div>
+			<div id="m25" class="minuteline"></div>
+			<div id="m26" class="minuteline linemain"></div>
+			<div id="m27" class="minuteline"></div>
+			<div id="m28" class="minuteline"></div>
+			<div id="m29" class="minuteline"></div>
+			<div id="m30" class="minuteline"></div>
+			<div id="m31" class="minuteline linemain"></div>
+			<div id="m32" class="minuteline"></div>
+			<div id="m33" class="minuteline"></div>
+			<div id="m34" class="minuteline"></div>
+			<div id="m35" class="minuteline"></div>
+			<div id="m36" class="minuteline linemain"></div>
+			<div id="m37" class="minuteline"></div>
+			<div id="m38" class="minuteline"></div>
+			<div id="m39" class="minuteline"></div>
+			<div id="m40" class="minuteline"></div>
+			<div id="m41" class="minuteline linemain"></div>
+			<div id="m42" class="minuteline"></div>
+			<div id="m43" class="minuteline"></div>
+			<div id="m44" class="minuteline"></div>
+			<div id="m45" class="minuteline"></div>
+			<div id="m46" class="minuteline linemain"></div>
+			<div id="m47" class="minuteline"></div>
+			<div id="m48" class="minuteline"></div>
+			<div id="m49" class="minuteline"></div>
+			<div id="m50" class="minuteline"></div>
+			<div id="m51" class="minuteline linemain"></div>
+			<div id="m52" class="minuteline"></div>
+			<div id="m53" class="minuteline"></div>
+			<div id="m54" class="minuteline"></div>
+			<div id="m55" class="minuteline"></div>
+			<div id="m56" class="minuteline linemain"></div>
+			<div id="m57" class="minuteline"></div>
+			<div id="m58" class="minuteline"></div>
+			<div id="m59" class="minuteline"></div>
+			<div id="m60" class="minuteline"></div>
+		</div>
+		<div id="GitHub">
+			<a href="https://github.com/lazy-guy/clock-nojs" target="_blank" rel="noopener noreferrer">
+				<img src="./static/github-mark-white.png" alt="GitHub" width="230" height="225" />
+			</a>
+		</div>
+	</body>
+</html>
