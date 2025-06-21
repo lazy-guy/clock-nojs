@@ -393,7 +393,7 @@
 				transform: rotate(354deg);
 			}
 
-			#time {
+			#timezones {
 				color: #efefef;
 				font-family: "Consolas", monospace;
 				font-size: 4vmin;
@@ -402,12 +402,14 @@
 				flex-direction: row;
 				align-items: center;
 				justify-content: center;
+				flex-wrap: wrap;
 				gap: 8px;
 			}
 
 			#timezone {
 				border: none;
 				border-radius: 0.5vmin;
+				max-width: 50vw;
 				padding: 4px 8px;
 				cursor: pointer;
 			}
@@ -436,7 +438,7 @@
 	</head>
 
 	<body>
-		<form id="time" method="get" action="">
+		<form id="timezones" method="get" action="">
 			Timezone:
 			<select title="timezone" id="timezone" name="tz">
 				{% for tz in timezones %}
